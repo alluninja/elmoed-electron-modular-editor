@@ -1,0 +1,38 @@
+<template name="text-editor">
+    <div>
+        <style scoped>
+            button, textarea, input {
+                font-size: 24px;
+                background: whiteSmoke;
+                color: darkGray;
+            }
+            textarea {
+                width: 600px;
+                height: 400px;
+            }
+        </style>
+        <div>
+            <button class="save">Save</button>
+            <button class="open">Load from save</button>
+        </div>
+        <textarea>${ text }</textarea>
+    </div>
+    <script>
+        const sButton = this.querySelector('button.save');
+        const textarea = this.querySelector('textarea');
+        sButton.addEventListener('click', () => send('save', textarea.value));
+
+        on('saving', () => {
+            sButton.textContent = 'Simulating save...';
+            sButton.disabled = 'disabled';
+        });
+
+        on('saved', () => {
+            sButton.textContent = 'Save';
+            sButton.removeAttribute('disabled');
+        });
+
+        const oButton = this.querySelector('button.open');
+        oButton.addEventListener('click', () => send('reload'));
+    </script>
+</template>
